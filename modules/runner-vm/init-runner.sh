@@ -12,15 +12,22 @@ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/dock
 sudo yum install -y docker-ce docker-ce-cli containerd.io
 sudo systemctl start docker
 
+# Create cron script to automatically prune unused images
+echo "Creating Docker images prune cron script..."
+echo "docker image prune -a --force --filter \"until=24h\"" | sudo tee /etc/cron.daily/prune-docker
+sudo chmod a+x /etc/cron.daily/prune-docker
+
 # Create user for GitHub Runner
 echo "Creating github-runner user..."
 sudo groupadd github-admins
 sudo adduser github-runner
 sudo usermod -a -G wheel github-runner
 sudo usermod -a -G github-admins github-runner
+sudo usermod -a -G docker github-runner
 
 CLOUD_USER=$(cat /etc/passwd | grep ":1000:" | cut -d ':' -f 1)
 sudo usermod -a -G github-admins "$CLOUD_USER"
+sudo usermod -a -G docker "$CLOUD_USER"
 
 # Install GitHub Runner
 echo "Creating /opt/actions-runner directory..."

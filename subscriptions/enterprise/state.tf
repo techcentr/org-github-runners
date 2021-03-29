@@ -1,10 +1,10 @@
 terraform {
   backend "remote" {
     hostname = "app.terraform.io"
-    organization = "templatr"
+    organization = "techcentr"
 
     workspaces {
-      name = "github-runners-enterprise-subscription"
+      name = "org-github-runners-enterprise"
     }
   }
 }

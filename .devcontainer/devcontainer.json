@@ -1,0 +1,7 @@
+{
+    "image": "hashicorp/terraform:0.14.9",
+    "runArgs": ["--entrypoint","ash"],
+    "extensions": [
+        "hashicorp.terraform"
+    ]
+}

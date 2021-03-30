@@ -9,7 +9,7 @@ module "runner-vm" {
 
     create_bastion = true
 
-    vms = {
+    vms = {   
         "P1" = {
             size = "Standard_B2s"
             disk_type = "StandardSSD_LRS"

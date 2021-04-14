@@ -7,7 +7,7 @@ module "runner-vm" {
     github_org            = var.github_org
     github_access_token   = var.github_access_token
 
-    create_bastion = true
+    create_bastion        = var.create_bastion
 
     vms = {
         "P1" = {

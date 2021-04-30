@@ -12,6 +12,9 @@ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/dock
 sudo yum install -y docker-ce docker-ce-cli containerd.io
 sudo systemctl start docker
 
+# Install packages which the workflows expect
+sudo yum install -y git
+
 # Create cron script to automatically prune unused images
 echo "Creating Docker images prune cron script..."
 echo "docker image prune -a --force --filter \"until=24h\"" | sudo tee /etc/cron.daily/prune-docker

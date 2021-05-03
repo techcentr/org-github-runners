@@ -56,9 +56,12 @@ export RUNNER_ALLOW_RUNASROOT=1
 ./config.sh --url "${github_org_url}" --unattended --replace --token "${github_runner_token}"
 
 sudo chgrp -R github-admins /opt/actions-runner
+sudo chown -R github-runner /opt/actions-runner
+
 sudo chmod g+rw /opt/actions-runner
-sudo chmod g+rw /opt/actions-runner/_diag
+sudo chmod g+rw /opt/actions-runner/*
 sudo chmod g+r /opt/actions-runner/.credentials_rsaparams
+sudo chmod g+r /opt/actions-runner/env.sh
 
 echo "Installing runner as a service..."
 sudo ./svc.sh install github-runner

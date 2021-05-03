@@ -22,12 +22,15 @@ sudo chmod a+x /etc/cron.daily/prune-docker
 
 # Create user for GitHub Runner
 echo "Creating github-runner user..."
-sudo groupadd github-admins
-sudo adduser github-runner
+sudo groupadd -g 8000 github-admins
+sudo adduser --uid 8000 --no-user-group github-runner
+sudo usermod -g github-admins github-runner # set the github-admins as the primary group
+
 sudo usermod -a -G wheel github-runner
 sudo usermod -a -G github-admins github-runner
 sudo usermod -a -G docker github-runner
 
+# Add the Azure SSH user to the admin and docker groups
 CLOUD_USER=$(cat /etc/passwd | grep ":1000:" | cut -d ':' -f 1)
 sudo usermod -a -G github-admins "$CLOUD_USER"
 sudo usermod -a -G docker "$CLOUD_USER"

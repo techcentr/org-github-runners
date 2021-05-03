@@ -14,3 +14,7 @@ This causes a small inconvenience - the token is fetched each time and therefore
 
 ## Bastion host - warning
 Create the bastion host only when debugging and then destroy it. It costs more than the VMs themselves :)
+
+## UID & GID
+
+The GitHub runners runs as `8000:8000`. This can cause issues with file system permissions when running tasks in a container as root. The containers should always be started with `--user 8000:8000`.

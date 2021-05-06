@@ -17,4 +17,8 @@ Create the bastion host only when debugging and then destroy it. It costs more t
 
 ## UID & GID
 
-The GitHub runners runs as `8000:8000`. This can cause issues with file system permissions when running tasks in a container as root. The containers should always be started with `--user 8000:8000`.
+The GitHub runners runs as `github-runner` user (UID `8000`) who is a member of the `github-admin` group (GID `8000`) because running the runner as root is insecure (the action could effectively destroy the whole machine). This unfortunately creates challenges in the following situations when running jobs/steps in Docker containers which run with root UID by default. These actions may create files which are readable/writable only by root and subsequent builds fail because they can't delete these files.
+
+To workaround this issue, all docker containers are by default created with `--user <UID>:<GID>` of the user who executed the docker command. For the containers created by the GitHub runner this means they are created with `--user 8000:8000`. In case this does not work with some specific action/docker image, you can override this behaviour by setting the `DOCKER_USER_OPTION` environment variable. You can:
+- set the variable to `""` which will revert to default Docker engine behaviour (i.e. will start the container as root)
+- set the variable to a custom `<UID>:<GID>` which will start the Docker container with the passed value. You can also use placeholders `$UID` and `$GID` for UID and GID of the user who executed the Docker command. 

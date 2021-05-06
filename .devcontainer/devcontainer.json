@@ -1,5 +1,7 @@
 {
-    "image": "hashicorp/terraform:0.14.9",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
     "runArgs": ["--entrypoint","ash"],
     "extensions": [
         "hashicorp.terraform"

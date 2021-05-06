@@ -36,6 +36,7 @@ data "template_file" "init_script" {
   vars = {
     github_runner_token = data.local_file.token_file.content
     github_org_url = "https://github.com/${var.github_org}"
+    github_org_name = var.github_org
   }
 }
 

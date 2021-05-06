@@ -21,4 +21,4 @@ The GitHub runners runs as `github-runner` user (UID `8000`) who is a member of 
 
 To workaround this issue, all docker containers are by default created with `--user <UID>:<GID>` of the user who executed the docker command. For the containers created by the GitHub runner this means they are created with `--user 8000:8000`. In case this does not work with some specific action/docker image, you can override this behaviour by setting the `DOCKER_USER_OPTION` environment variable. You can:
 - set the variable to `""` which will revert to default Docker engine behaviour (i.e. will start the container as root)
-- set the variable to a custom `<UID>:<GID>` which will start the Docker container with the passed value. You can also use placeholders `$UID` and `$GID` for UID and GID of the user who executed the Docker command.
+- set the variable to a custom `<UID>:<GID>` which will start the Docker container with the passed value. You can also use placeholders `$UID` and `$GID` for UID and GID of the user who executed the Docker command. 
